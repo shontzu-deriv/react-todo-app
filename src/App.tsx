@@ -5,6 +5,7 @@ export default function App() {
   const [name, setName] = React.useState<string>("");
   const [age, setAge] = React.useState<string | undefined>("");
   const [color, setColor] = React.useState<string | undefined>("");
+  const [gender, setGender] = React.useState<string>("Male");
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -17,6 +18,16 @@ export default function App() {
   const changeColor = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setColor(event.target.value);
   };
+
+  const handleChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setGender(event.target.value);
+  };
+
+  const resetRadioState = () => {
+    setGender("");
+  }
 
   function handleSubmit() {
     setName(name);
@@ -37,6 +48,22 @@ export default function App() {
         <div>
           <Input name="Name" value={name} onChange={changeName} />
           <Input name="Age" value={age} onChange={changeAge} />
+            <span className="w-50 pa-16 mb-16" >Gender</span>
+          <div className="d-flex h-center pa-16 w-50">
+            <input
+              type="radio"
+              value="male"
+              checked={gender === "male"}
+              onChange={handleChange}
+            />Male
+            <input
+              type="radio"
+              value="female"
+              checked={gender === "female"}
+              onChange={handleChange}/> Female
+          </div>
+          {/* <Radio value={gender} onChange={changeGender}/> */}
+          {/* <Radio name="Gender" value={gender} onChange={changeGender} /> */}
           <Select name="Favourite Color" value={color} onChange={changeColor} />
         </div>
         <button
@@ -76,6 +103,23 @@ const Input = ({ value, onChange, name }: InputType) => {
   );
 };
 
+// type RadioType = {
+//   // gender:string;
+//   value: string | undefined;
+//   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+// };
+
+// const Radio = ({ value, onChange, /* gender */ }: RadioType) => {
+//   return (
+//     <div className="pa-16">
+//       {/* <label>{gender}</label>{" "} */}
+//       <select value={value} onChange={onChange}>
+//         <option value="Male"> Male </option>
+//         <option value="Female"> Female </option>
+//       </select>
+//     </div>
+//   );
+// };
 
 type SelectType = {
   name: string;
